@@ -19,6 +19,9 @@ function Routes() {
           // eslint-disable-next-line react/jsx-props-no-spreading
           header: props => <Header {...props} />,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          cardStyle: {
+            backgroundColor: '#191920',
+          },
         }}
       >
         <Stack.Screen name="Home" component={Home} />
