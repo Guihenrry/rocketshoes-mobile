@@ -83,7 +83,7 @@ function Cart({ cart, navigation }) {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart.products,
 });
 
 Cart.propTypes = {

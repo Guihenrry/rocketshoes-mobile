@@ -38,6 +38,14 @@ export const AddButton = styled.TouchableOpacity`
   border-radius: 4px;
 `;
 
+export const AddButtonLoading = styled.View`
+  padding: 14px 20px;
+  background: rgba(0, 0, 0, 0.2);
+
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+`;
+
 export const AddButtonText = styled.Text`
   flex: 1;
   text-transform: uppercase;
