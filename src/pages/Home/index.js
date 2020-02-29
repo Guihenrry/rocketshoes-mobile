@@ -37,6 +37,7 @@ class Home extends Component {
     const data = response.data.map(product => ({
       ...product,
       priceFormatted: formatPrice(product.price),
+      amount: 1,
     }));
 
     this.setState({
@@ -57,7 +58,7 @@ class Home extends Component {
         <ProductImage source={{ uri: item.image }} />
         <ProductTitle>{item.title}</ProductTitle>
         <ProductPrice>{item.priceFormatted}</ProductPrice>
-        <AddButton onPress={this.handleAddProduct}>
+        <AddButton onPress={() => this.handleAddProduct(item)}>
           <AddButtonAmount>
             <Icon name="add-shopping-cart" color="#FFF" size={20} />
             <AddButtonAmountText>1</AddButtonAmountText>
