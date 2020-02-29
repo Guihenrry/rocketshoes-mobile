@@ -42,6 +42,14 @@ export default function cart(state = INITIAL_STATE, action) {
           draft.addingIds.splice(loadingIndex, 1);
         }
       });
+    case '@cart/REMOVE':
+      return produce(state, draft => {
+        const productIndex = draft.products.findIndex(p => p.id === action.id);
+
+        if (productIndex >= 0) {
+          draft.products.splice(productIndex, 1);
+        }
+      });
     default:
       return state;
   }
