@@ -12,7 +12,7 @@ Simples e-commerce que lista produtos e permite adicionar ao carrinho. Foi desen
 
 ### Demo
 <p align="center">
-  <img alt="Demo" src="" width="300px" >
+  <img alt="Demo" src="https://github.com/Guihenrry/rocketshoes-mobile/blob/master/demo.gif" width="300px" >
 </p>
 
 ## :information_source: Como execultar
