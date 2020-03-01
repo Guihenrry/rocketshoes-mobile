@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as CartActions from '../../store/modules/cart/actions';
@@ -31,23 +30,34 @@ import {
   EmptyCartButtonText,
 } from './styles';
 
-function Cart({
-  cart,
-  total,
-  navigation,
-  updateAmountRequest,
-  removeFromCart,
-}) {
+export default function Cart({ navigation }) {
+  const cart = useSelector(state =>
+    state.cart.products.map(product => ({
+      ...product,
+      subTotal: formatPrice(product.price * product.amount),
+    }))
+  );
+
+  const total = useSelector(state =>
+    formatPrice(
+      state.cart.products.reduce((totalSum, product) => {
+        return totalSum + product.price * product.amount;
+      }, 0)
+    )
+  );
+
+  const dispatch = useDispatch();
+
   function increment(product) {
-    updateAmountRequest(product.id, product.amount + 1);
+    dispatch(CartActions.updateAmountRequest(product.id, product.amount + 1));
   }
 
   function decrement(product) {
-    updateAmountRequest(product.id, product.amount - 1);
+    dispatch(CartActions.updateAmountRequest(product.id, product.amount - 1));
   }
 
   function remove(id) {
-    removeFromCart(id);
+    dispatch(CartActions.removeFromCart(id));
   }
 
   if (cart.length === 0) {
@@ -103,39 +113,8 @@ function Cart({
   );
 }
 
-const mapStateToProps = state => ({
-  cart: state.cart.products.map(product => ({
-    ...product,
-    subTotal: formatPrice(product.price * product.amount),
-  })),
-  total: formatPrice(
-    state.cart.products.reduce((total, product) => {
-      return total + product.price * product.amount;
-    }, 0)
-  ),
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
-
 Cart.propTypes = {
-  cart: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      priceFormated: PropTypes.string,
-      amount: PropTypes.number,
-      subTotal: PropTypes.string,
-    })
-  ).isRequired,
-  total: PropTypes.string.isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
-  updateAmountRequest: PropTypes.func.isRequired,
-  removeFromCart: PropTypes.func.isRequired,
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
